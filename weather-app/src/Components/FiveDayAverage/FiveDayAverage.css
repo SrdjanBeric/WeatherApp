@@ -1,0 +1,33 @@
+.five-days-average {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.average-temperature {
+    margin-top: 20px !important;
+    font-size: 100px !important;
+}
+
+.blue-font {
+    font-family: "Ubuntu";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 25px;
+    /* identical to box height, or 100% */
+
+    color: #264147;
+}
+
+.white-font {
+    font-family: "Ubuntu";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 25px;
+    /* identical to box height, or 100% */
+
+    color: #ffffff;
+    margin-top: 0px;
+}

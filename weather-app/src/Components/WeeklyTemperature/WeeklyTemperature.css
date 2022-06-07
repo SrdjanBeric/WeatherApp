@@ -1,0 +1,11 @@
+.weekly-temperature {
+    display: flex;
+    flex-direction: row;
+    column-gap: 40px;
+}
+
+.weekly-temperature-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
