@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import "./CitiesDropdown.css";
 
@@ -11,12 +10,12 @@ function CitiesDropdown({ citiesData, city }: { citiesData: any; city: any }) {
         );
     });
 
-    const handleChange = (e: any) => {
+    const selectCity = (e: any) => {
         city(e.target.value);
     };
     return (
         <div className="cities-dropdown">
-            <select className="city-menu" name="city" onChange={handleChange}>
+            <select className="city-menu" name="city" onChange={selectCity}>
                 {renderOptions}
             </select>
         </div>

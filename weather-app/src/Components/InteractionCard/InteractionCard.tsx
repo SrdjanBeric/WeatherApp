@@ -8,41 +8,32 @@ import { fetchCoordinates } from "../../Redux";
 import { fetchWeather } from "../../Redux";
 import icon from "../../Assets/images/cloud.png";
 function InteractionCard({
-    citiesData,
     fetchCities,
     fetchCoordinates,
     coordinatesData,
     fetchWeather,
 }: {
-    citiesData: any;
     fetchCities: any;
     fetchCoordinates: any;
     coordinatesData: any;
     fetchWeather: any;
 }) {
-    const [country, setCountry] = useState<string | null | undefined>("");
-    const [countryCode, setCountryCode] = useState<string | null | undefined>(
-        ""
-    );
-    const [city, setCity] = useState<string | null | undefined>("");
+    const [countryCode, setCountryCode] = useState<string>("");
 
     const handleCountry = (name: string, code: string) => {
-        setCountry(name);
         setCountryCode(code);
         fetchCities(name);
     };
 
     const handleCity = (cityName: string) => {
-        setCity(cityName);
-        console.log(cityName);
         fetchCoordinates(countryCode, cityName);
     };
 
     useEffect(() => {
-        if (coordinatesData.coordinates.length !== 0) {
+        if (!!coordinatesData?.coordinates) {
             fetchWeather(
-                coordinatesData.coordinates[0],
-                coordinatesData.coordinates[1]
+                coordinatesData?.coordinates[0],
+                coordinatesData?.coordinates[1]
             );
         }
     }, [coordinatesData]);
@@ -50,17 +41,16 @@ function InteractionCard({
         <>
             <div className="card">
                 <img style={{ width: "50px", height: "40px" }} src={icon} />
-                <CountriesDropdown country={handleCountry} />
+                <CountriesDropdown handleCountry={handleCountry} />
                 <CitiesDropdown city={handleCity} />
             </div>
-            {coordinatesData?.error != "" && <div>Error</div>}
+            {!!coordinatesData?.error && <div>Error</div>}
         </>
     );
 }
 
 const mapStateToProps = (state: any) => {
     return {
-        citiesData: state.cities,
         coordinatesData: state.coordinates,
     };
 };

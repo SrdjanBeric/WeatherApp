@@ -2,31 +2,31 @@ import React from "react";
 import "./WeeklyTemperature.css";
 import { connect } from "react-redux";
 
-function WeeklyTemperature({ weatherData }: { weatherData: any }) {
-    var week = [];
+const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+];
 
-    const GetDayInWeek = (dt: number) => {
-        var days = [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday",
-        ];
-        var tmp = new Date(dt * 1000);
-        var day = days[tmp.getDay()];
-        return day;
+const SECONDS_TO_MILISECONDS = 1000;
+
+function WeeklyTemperature({ weatherData }: { weatherData: any }) {
+    let week = [];
+
+    const GetDayInWeek = (unix_timestamp: number) => {
+        const datetime = new Date(unix_timestamp * SECONDS_TO_MILISECONDS);
+        return days[datetime.getDay()];
     };
 
-    if (weatherData?.weather.length !== 0) {
+    if (!!weatherData?.weather) {
         week = weatherData?.weather?.map((day: any) => {
-            const weekDay = GetDayInWeek(day.dt);
-            return [weekDay, day.temp.day];
+            return [GetDayInWeek(day.dt), day.temp.day];
         });
     }
-    console.log(week);
 
     if (!!week) {
         const renderWeek = week.map((day: any) => {
@@ -38,9 +38,8 @@ function WeeklyTemperature({ weatherData }: { weatherData: any }) {
             );
         });
         return <div className="weekly-temperature">{renderWeek}</div>;
-    } else {
-        return <div></div>;
     }
+    return <div></div>;
 }
 
 const mapStateToProps = (state: any) => {
