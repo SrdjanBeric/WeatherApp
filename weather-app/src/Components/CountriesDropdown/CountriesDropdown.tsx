@@ -5,7 +5,7 @@ import countries from "../../Assets/Countries.json";
 const EMOJI_CONSTANT = 127397;
 
 function CountriesDropdown({ handleCountry }: { handleCountry: any }) {
-    const convertToFlagEmoji = (countryCode: string) => {
+    const convertToEmojiFlag = (countryCode: string) => {
         const codePoints = countryCode
             .toUpperCase()
             .split("")
@@ -13,17 +13,9 @@ function CountriesDropdown({ handleCountry }: { handleCountry: any }) {
         return String.fromCodePoint(...codePoints);
     };
 
-    const renderOptions = countries.map((country) => {
-        return (
-            <option key={country.Iso2} value={country.name}>
-                {country.Iso2} {convertToFlagEmoji(country.Iso2)}
-            </option>
-        );
-    });
-
     const selectCountry = (e: any) => {
         const value = countries.filter((item) => {
-            return item.name == e.target.value;
+            return item.name === e.target.value;
         });
         handleCountry(e.target.value, value[0].Iso2);
     };
@@ -35,7 +27,13 @@ function CountriesDropdown({ handleCountry }: { handleCountry: any }) {
                 name="country"
                 onChange={selectCountry}
             >
-                {renderOptions}
+                {countries.map((country) => {
+                    return (
+                        <option key={country.Iso2} value={country.name}>
+                            {country.Iso2} {convertToEmojiFlag(country.Iso2)}
+                        </option>
+                    );
+                })}
             </select>
         </div>
     );

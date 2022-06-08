@@ -1,4 +1,3 @@
-import React from "react";
 import "./WeeklyTemperature.css";
 import { connect } from "react-redux";
 
@@ -28,18 +27,26 @@ function WeeklyTemperature({ weatherData }: { weatherData: any }) {
         });
     }
 
-    if (!!week) {
-        const renderWeek = week.map((day: any) => {
-            return (
-                <div className="weekly-temperature-day">
-                    <p className="blue-font">{day[0]}</p>
-                    <p className="white-font">{Math.round(day[1])} °C</p>
+    return (
+        <>
+            {!!week ? (
+                <div className="weekly-temperature">
+                    {week.map((day: any) => {
+                        return (
+                            <div className="weekly-temperature-day">
+                                <p className="blue-font">{day[0]}</p>
+                                <p className="white-font">
+                                    {Math.round(day[1])} °C
+                                </p>
+                            </div>
+                        );
+                    })}
                 </div>
-            );
-        });
-        return <div className="weekly-temperature">{renderWeek}</div>;
-    }
-    return <div></div>;
+            ) : (
+                <div></div>
+            )}
+        </>
+    );
 }
 
 const mapStateToProps = (state: any) => {
