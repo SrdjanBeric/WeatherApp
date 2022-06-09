@@ -19,14 +19,12 @@ const months = [
 const SECONDS_TO_MILISECONDS = 1000;
 
 function FiveDayAverage({ getAverage }: { getAverage: any }) {
-    const weatherData = useSelector((state: any) => state.weather);
+    const weatherData = useSelector(({ weather }: { weather: any }) => weather);
     let fiveDayAverageTemp = 0;
     let fiveDays = [];
     if (weatherData?.weather?.length) {
         fiveDays = weatherData?.weather?.slice(0, 5);
-        const dayTemp = fiveDays.map((day: any) => {
-            return day.temp.day;
-        });
+        const dayTemp = fiveDays.map((day: any) => day.temp.day);
 
         fiveDayAverageTemp =
             dayTemp.reduce((a: any, b: any) => a + b) / dayTemp.length;

@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCities, fetchCoordinates, fetchWeather } from "../../Redux";
 import icon from "../../Assets/images/cloud.png";
 function InteractionCard({}: {}) {
-    const coordinatesData = useSelector((state: any) => state.coordinates);
+    const coordinatesData = useSelector(
+        ({ coordinates }: { coordinates: any }) => coordinates
+    );
     const dispatch = useDispatch();
     const [countryCode, setCountryCode] = useState<string>("");
 
@@ -20,14 +22,13 @@ function InteractionCard({}: {}) {
     };
 
     useEffect(() => {
-        if (coordinatesData?.coordinates?.length) {
-            dispatch(
-                fetchWeather(
-                    coordinatesData?.coordinates[0],
-                    coordinatesData?.coordinates[1]
-                ) as any
-            );
-        }
+        if (!coordinatesData?.coordinates?.length) return;
+        dispatch(
+            fetchWeather(
+                coordinatesData?.coordinates[0],
+                coordinatesData?.coordinates[1]
+            ) as any
+        );
     }, [coordinatesData]);
     return (
         <>

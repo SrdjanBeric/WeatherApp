@@ -13,10 +13,9 @@ function CountriesDropdown({ handleCountry }: { handleCountry: any }) {
     };
 
     const selectCountry = (e: any) => {
-        const countryInfo = countries.filter((item) => {
-            return item.name === e.target.value;
-        });
-        handleCountry(e.target.value, countryInfo[0].Iso2);
+        const value = e.target.value;
+        const countryInfo = countries.filter(({ name }) => name === value);
+        handleCountry(value, countryInfo[0].Iso2);
     };
 
     return (
@@ -26,13 +25,11 @@ function CountriesDropdown({ handleCountry }: { handleCountry: any }) {
                 name="country"
                 onChange={selectCountry}
             >
-                {countries.map((country) => {
-                    return (
-                        <option key={country.Iso2} value={country.name}>
-                            {country.Iso2} {convertToEmojiFlag(country.Iso2)}
-                        </option>
-                    );
-                })}
+                {countries.map((country) => (
+                    <option key={country.Iso2} value={country.name}>
+                        {country.Iso2} {convertToEmojiFlag(country.Iso2)}
+                    </option>
+                ))}
             </select>
         </div>
     );
