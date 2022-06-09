@@ -1,4 +1,4 @@
-import { connect, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import "./CitiesDropdown.css";
 
 function CitiesDropdown({ city }: { city: any }) {

@@ -31,9 +31,9 @@ function WeeklyTemperature() {
         <>
             {!!week ? (
                 <div className="weekly-temperature">
-                    {week.map((day: any) => {
+                    {week.map((day: any, i: number) => {
                         return (
-                            <div className="weekly-temperature-day">
+                            <div key={i} className="weekly-temperature-day">
                                 <p className="blue-font">{day[0]}</p>
                                 <p className="white-font">
                                     {Math.round(day[1])} °C

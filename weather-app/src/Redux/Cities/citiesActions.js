@@ -36,7 +36,6 @@ export const fetchCities = (country) => {
                 dispatch(fetchCitiesSuccess(response.data.data));
             })
             .catch((error) => {
-                console.log("ERROR", error);
                 const errorMsg = error.response.data.error;
                 dispatch(fetchCitiesFailure(errorMsg));
             });

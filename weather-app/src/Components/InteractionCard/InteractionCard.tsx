@@ -20,7 +20,7 @@ function InteractionCard({}: {}) {
     };
 
     useEffect(() => {
-        if (!!coordinatesData?.coordinates) {
+        if (coordinatesData?.coordinates?.length) {
             dispatch(
                 fetchWeather(
                     coordinatesData?.coordinates[0],

@@ -41,7 +41,6 @@ export const fetchCoordinates = (country_code, city) => {
                 );
             })
             .catch((error) => {
-                console.log("ERROR", error);
                 const errorMsg = error;
                 dispatch(fetchCoordinatesFailure(errorMsg));
             });

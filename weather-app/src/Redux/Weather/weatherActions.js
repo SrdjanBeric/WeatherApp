@@ -34,10 +34,8 @@ export const fetchWeather = (lat, lon) => {
             )
             .then((response) => {
                 dispatch(fetchWeatherSuccess(response.data.daily));
-                console.log(response.data);
             })
             .catch((error) => {
-                console.log("ERROR", error);
                 const errorMsg = error;
                 dispatch(fetchWeatherFailure(errorMsg));
             });
