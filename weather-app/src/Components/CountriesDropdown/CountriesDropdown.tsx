@@ -1,4 +1,3 @@
-import React from "react";
 import "./CountriesDropdown.css";
 import countries from "../../Assets/Countries.json";
 
@@ -14,10 +13,10 @@ function CountriesDropdown({ handleCountry }: { handleCountry: any }) {
     };
 
     const selectCountry = (e: any) => {
-        const value = countries.filter((item) => {
+        const countryInfo = countries.filter((item) => {
             return item.name === e.target.value;
         });
-        handleCountry(e.target.value, value[0].Iso2);
+        handleCountry(e.target.value, countryInfo[0].Iso2);
     };
 
     return (

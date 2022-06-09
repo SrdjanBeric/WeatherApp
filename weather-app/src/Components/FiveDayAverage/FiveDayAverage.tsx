@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import "./FiveDayAverage.css";
 
 const months = [
@@ -18,13 +18,8 @@ const months = [
 
 const SECONDS_TO_MILISECONDS = 1000;
 
-function FiveDayAverage({
-    weatherData,
-    getAverage,
-}: {
-    weatherData: any;
-    getAverage: any;
-}) {
+function FiveDayAverage({ getAverage }: { getAverage: any }) {
+    const weatherData = useSelector((state: any) => state.weather);
     let fiveDayAverageTemp = 0;
     let fiveDays = [];
     if (weatherData?.weather?.length) {
@@ -62,10 +57,4 @@ function FiveDayAverage({
     );
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        weatherData: state.weather,
-    };
-};
-
-export default connect(mapStateToProps)(FiveDayAverage);
+export default FiveDayAverage;

@@ -1,5 +1,5 @@
 import "./WeeklyTemperature.css";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 const days = [
     "Monday",
@@ -13,9 +13,9 @@ const days = [
 
 const SECONDS_TO_MILISECONDS = 1000;
 
-function WeeklyTemperature({ weatherData }: { weatherData: any }) {
+function WeeklyTemperature() {
+    const weatherData = useSelector((state: any) => state.weather);
     let week = [];
-
     const GetDayInWeek = (unix_timestamp: number) => {
         const datetime = new Date(unix_timestamp * SECONDS_TO_MILISECONDS);
         return days[datetime.getDay()];
@@ -49,10 +49,4 @@ function WeeklyTemperature({ weatherData }: { weatherData: any }) {
     );
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        weatherData: state.weather,
-    };
-};
-
-export default connect(mapStateToProps)(WeeklyTemperature);
+export default WeeklyTemperature;

@@ -1,39 +1,31 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import CitiesDropdown from "../CitiesDropdown/CitiesDropdown";
 import CountriesDropdown from "../CountriesDropdown/CountriesDropdown";
 import "./InteractionCard.css";
-import { connect } from "react-redux";
-import { fetchCities } from "../../Redux";
-import { fetchCoordinates } from "../../Redux";
-import { fetchWeather } from "../../Redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCities, fetchCoordinates, fetchWeather } from "../../Redux";
 import icon from "../../Assets/images/cloud.png";
-function InteractionCard({
-    fetchCities,
-    fetchCoordinates,
-    coordinatesData,
-    fetchWeather,
-}: {
-    fetchCities: any;
-    fetchCoordinates: any;
-    coordinatesData: any;
-    fetchWeather: any;
-}) {
+function InteractionCard({}: {}) {
+    const coordinatesData = useSelector((state: any) => state.coordinates);
+    const dispatch = useDispatch();
     const [countryCode, setCountryCode] = useState<string>("");
 
     const handleCountry = (name: string, code: string) => {
         setCountryCode(code);
-        fetchCities(name);
+        dispatch(fetchCities(name) as any);
     };
 
     const handleCity = (cityName: string) => {
-        fetchCoordinates(countryCode, cityName);
+        dispatch(fetchCoordinates(countryCode, cityName) as any);
     };
 
     useEffect(() => {
         if (!!coordinatesData?.coordinates) {
-            fetchWeather(
-                coordinatesData?.coordinates[0],
-                coordinatesData?.coordinates[1]
+            dispatch(
+                fetchWeather(
+                    coordinatesData?.coordinates[0],
+                    coordinatesData?.coordinates[1]
+                ) as any
             );
         }
     }, [coordinatesData]);
@@ -49,19 +41,4 @@ function InteractionCard({
     );
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        coordinatesData: state.coordinates,
-    };
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-    return {
-        fetchCities: (country: any) => dispatch(fetchCities(country)),
-        fetchCoordinates: (code: string, city: string) =>
-            dispatch(fetchCoordinates(code, city)),
-        fetchWeather: (lat: any, lon: any) => dispatch(fetchWeather(lat, lon)),
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(InteractionCard);
+export default InteractionCard;
