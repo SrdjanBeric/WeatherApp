@@ -3,7 +3,7 @@ import {
     FETCH_WEATHER_SUCCESS,
     FETCH_WEATHER_FAILURE,
 } from "./weatherTypes";
-import axios from "axios";
+import OpenWeatherMapService from "../../APIs/OpenWeatherMapService";
 
 export const fetchWeatherRequest = () => {
     return {
@@ -28,16 +28,10 @@ export const fetchWeatherFailure = (error) => {
 export const fetchWeather = (lat, lon) => {
     return (dispatch) => {
         dispatch(fetchWeatherRequest());
-        axios
-            .get(
-                `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,alerts,current,minutely&appid=bb0f5e9e197d66854bd4a147d219b6d0&units=metric`
-            )
+        OpenWeatherMapService.getWeather(lat, lon)
             .then((response) => {
-                dispatch(fetchWeatherSuccess(response.data.daily));
+                dispatch(fetchWeatherSuccess(response.daily));
             })
-            .catch((error) => {
-                const errorMsg = error;
-                dispatch(fetchWeatherFailure(errorMsg));
-            });
+            .catch((error) => dispatch(fetchWeatherFailure(error)));
     };
 };

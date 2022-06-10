@@ -3,7 +3,7 @@ import {
     FETCH_COORDINATES_SUCCESS,
     FETCH_COORDINATES_FAILURE,
 } from "./coordinatesTypes";
-import axios from "axios";
+import OpenWeatherMapService from "../../APIs/OpenWeatherMapService";
 
 export const fetchCoordinatesRequest = () => {
     return {
@@ -28,21 +28,13 @@ export const fetchCoordinatesFailure = (error) => {
 export const fetchCoordinates = (country_code, city) => {
     return (dispatch) => {
         dispatch(fetchCoordinatesRequest());
-        axios
-            .get(
-                `http://api.openweathermap.org/geo/1.0/direct?q=${city},${country_code}&limit=1&appid=bb0f5e9e197d66854bd4a147d219b6d0`
-            )
+        OpenWeatherMapService.getCoordinates(country_code, city)
             .then((response) => {
+                console.log(response);
                 dispatch(
-                    fetchCoordinatesSuccess([
-                        response.data[0].lat,
-                        response.data[0].lon,
-                    ])
+                    fetchCoordinatesSuccess([response[0].lat, response[0].lon])
                 );
             })
-            .catch((error) => {
-                const errorMsg = error;
-                dispatch(fetchCoordinatesFailure(errorMsg));
-            });
+            .catch((error) => dispatch(fetchCoordinatesFailure(error)));
     };
 };

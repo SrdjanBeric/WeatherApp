@@ -3,7 +3,7 @@ import {
     FETCH_CITIES_SUCCESS,
     FETCH_CITIES_FAILURE,
 } from "./citiesTypes";
-import axios from "axios";
+import CitiesService from "../../APIs/CitiesService";
 
 export const fetchCitiesRequest = () => {
     return {
@@ -28,16 +28,10 @@ export const fetchCitiesFailure = (error) => {
 export const fetchCities = (country) => {
     return (dispatch) => {
         dispatch(fetchCitiesRequest());
-        axios
-            .post(`https://countriesnow.space/api/v0.1/countries/cities`, {
-                country: country,
-            })
+        CitiesService.post(country)
             .then((response) => {
-                dispatch(fetchCitiesSuccess(response.data.data));
+                dispatch(fetchCitiesSuccess(response.data));
             })
-            .catch((error) => {
-                const errorMsg = error.response.data.error;
-                dispatch(fetchCitiesFailure(errorMsg));
-            });
+            .catch((error) => dispatch(fetchCitiesFailure(error)));
     };
 };
