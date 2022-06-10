@@ -1,22 +1,17 @@
-import request from "./BaseService";
-import axios from "axios";
+import BaseService from "./BaseService";
 
-const client = axios.create({
-    baseURL: `https://countriesnow.space/api/v0.1/`,
-});
+const baseURL = `https://countriesnow.space/api/v0.1`;
 
-const post = (country) => {
-    return request(client, {
-        method: "POST",
-        url: "/countries/cities",
-        data: {
-            country,
-        },
-    });
+const getCities = (country) => {
+    const url = "/countries/cities";
+    const data = {
+        country,
+    };
+    return BaseService.post(baseURL + url, data);
 };
 
 const CitiesService = {
-    post,
+    getCities,
 };
 
 export default CitiesService;

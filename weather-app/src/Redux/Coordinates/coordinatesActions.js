@@ -30,7 +30,6 @@ export const fetchCoordinates = (country_code, city) => {
         dispatch(fetchCoordinatesRequest());
         OpenWeatherMapService.getCoordinates(country_code, city)
             .then((response) => {
-                console.log(response);
                 dispatch(
                     fetchCoordinatesSuccess([response[0].lat, response[0].lon])
                 );

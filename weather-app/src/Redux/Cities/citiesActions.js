@@ -28,7 +28,7 @@ export const fetchCitiesFailure = (error) => {
 export const fetchCities = (country) => {
     return (dispatch) => {
         dispatch(fetchCitiesRequest());
-        CitiesService.post(country)
+        CitiesService.getCities(country)
             .then((response) => {
                 dispatch(fetchCitiesSuccess(response.data));
             })
